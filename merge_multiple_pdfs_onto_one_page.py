@@ -1,6 +1,6 @@
 import os
 
-def merge_multiple_pdfs_onto_one_page(outputfilename,inputfilenames,numcol,numrow,orientation='landscape'):
+def merge_multiple_pdfs_onto_one_page(outputfilename,inputfilenames,numcol,numrow,orientation='landscape',leave_temporary_files=False):
 
   for filename in inputfilenames:
      print filename
@@ -84,7 +84,10 @@ def merge_multiple_pdfs_onto_one_page(outputfilename,inputfilenames,numcol,numro
 
   # run pdflatex
   os.system('pdflatex '+outputfilename[:-4]+'.tex\n')
-  os.system('rm '+outputfilename[:-4]+'.tex\n')
-  os.system('rm '+outputfilename[:-4]+'.aux\n')
-  os.system('rm '+outputfilename[:-4]+'.log\n')
+
+  # clean up
+  if not leave_temporary_files:
+    os.system('rm '+outputfilename[:-4]+'.tex\n')
+    os.system('rm '+outputfilename[:-4]+'.aux\n')
+    os.system('rm '+outputfilename[:-4]+'.log\n')
 
